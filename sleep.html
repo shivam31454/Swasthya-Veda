@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sleep Management - Swasthya</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="sleep.css">
+</head>
+<body>
+    <div class="container">
+        <header class="main-header">
+            <h1>Sleep Management Zone</h1>
+            <p>Find peace and tranquility for better sleep</p>
+        </header>
+
+        <main>
+            <section class="meditation-section">
+                <h2>Guided Meditation</h2>
+                <div class="breathing-circle" id="breathingCircle">
+                    <div class="circle-content">
+                        <span id="breathingText">Breathe In</span>
+                    </div>
+                </div>
+                <button id="startMeditation" class="primary-btn">Start Meditation</button>
+            </section>
+
+            <section class="white-noise-section">
+                <h2>White Noise for Sleep</h2>
+                <div class="noise-controls">
+                    <select id="noiseType" class="select-input">
+                        <option value="rain">Rain</option>
+                        <option value="waves">Ocean Waves</option>
+                        <option value="forest">Forest</option>
+                    </select>
+                    <div class="timer-input">
+                        <label for="sleepTimer">Timer (minutes):</label>
+                        <input type="number" id="sleepTimer" min="5" max="120" value="30" class="number-input">
+                    </div>
+                    <button id="playNoise" class="primary-btn">Play Sound</button>
+                </div>
+            </section>
+
+            <section class="action-buttons">
+                <a href="/yoga" class="action-btn" id="yogaAssistantBtn">Get Yoga AI Assistant</a>
+                <a href="quiz3.html" class="action-btn" id="stressCheckBtn">Check Stress Level</a>
+            </section>
+
+            <section class="blog-section">
+                <h2>Sleep Tips & Articles</h2>
+                <div class="blog-grid">
+                    <article class="blog-card">
+                        <h3>10 Natural Ways to Improve Your Sleep</h3>
+                        <p>Discover simple lifestyle changes that can significantly improve your sleep quality and help you wake up refreshed.</p>
+                        <div class="article-content" style="display: none;">
+                            <h4>1. Establish a Consistent Sleep Schedule</h4>
+                            <p>Going to bed and waking up at the same time every day helps regulate your body's internal clock. This consistency can improve the quality of your sleep over time.</p>
+                            
+                            <h4>2. Create a Relaxing Bedtime Routine</h4>
+                            <p>Develop a pre-sleep ritual that signals to your body it's time to wind down. This could include reading, gentle stretching, or meditation.</p>
+                            
+                            <h4>3. Optimize Your Sleep Environment</h4>
+                            <p>Keep your bedroom cool, dark, and quiet. Invest in comfortable bedding and consider using blackout curtains to block out light.</p>
+                            
+                            <h4>4. Limit Screen Time Before Bed</h4>
+                            <p>The blue light emitted by phones, tablets, and computers can interfere with your body's production of melatonin, making it harder to fall asleep.</p>
+                            
+                            <h4>5. Watch Your Caffeine Intake</h4>
+                            <p>Avoid caffeine in the afternoon and evening, as it can stay in your system for up to 8 hours and disrupt your sleep.</p>
+                            
+                            <h4>6. Exercise Regularly</h4>
+                            <p>Regular physical activity can help you fall asleep faster and enjoy deeper sleep, but avoid vigorous exercise close to bedtime.</p>
+                            
+                            <h4>7. Manage Stress</h4>
+                            <p>Practice relaxation techniques like deep breathing, meditation, or progressive muscle relaxation to calm your mind before bed.</p>
+                            
+                            <h4>8. Be Mindful of What You Eat</h4>
+                            <p>Avoid heavy meals, spicy foods, and excessive fluids before bedtime. A light snack is okay if you're hungry.</p>
+                            
+                            <h4>9. Create a Comfortable Sleep Environment</h4>
+                            <p>Invest in a good mattress and pillows that support your preferred sleeping position. Keep your bedroom at a comfortable temperature.</p>
+                            
+                            <h4>10. Consider Natural Sleep Aids</h4>
+                            <p>Herbal teas like chamomile or valerian root, and supplements like melatonin can help promote sleep, but consult with a healthcare provider first.</p>
+                        </div>
+                        <button class="read-more-btn">Read More</button>
+                    </article>
+                    <article class="blog-card">
+                        <h3>The Science of Sleep: Understanding Your Circadian Rhythm</h3>
+                        <p>Learn how your body's internal clock works and how to align your daily routine with it for better sleep.</p>
+                        <div class="article-content" style="display: none;">
+                            <h4>What is Circadian Rhythm?</h4>
+                            <p>Your circadian rhythm is a 24-hour internal clock that cycles between sleepiness and alertness at regular intervals. It's controlled by a part of the brain called the suprachiasmatic nucleus (SCN).</p>
+                            
+                            <h4>How Light Affects Your Sleep</h4>
+                            <p>Light is the primary cue that influences circadian rhythms. Natural sunlight in the morning helps reset your internal clock, while artificial light at night can disrupt it.</p>
+                            
+                            <h4>The Role of Melatonin</h4>
+                            <p>Melatonin is a hormone that helps regulate your sleep-wake cycle. Your body produces more melatonin when it's dark, helping you feel sleepy.</p>
+                            
+                            <h4>Sleep Stages and Cycles</h4>
+                            <p>Sleep occurs in cycles of about 90 minutes, each containing different stages: light sleep, deep sleep, and REM sleep. Each stage plays a crucial role in physical and mental restoration.</p>
+                            
+                            <h4>Tips for Aligning with Your Natural Rhythm</h4>
+                            <ul>
+                                <li>Get exposure to natural light in the morning</li>
+                                <li>Maintain consistent sleep and wake times</li>
+                                <li>Create a dark, quiet sleep environment</li>
+                                <li>Avoid bright screens before bedtime</li>
+                                <li>Be mindful of meal timing</li>
+                            </ul>
+                            
+                            <h4>Common Disruptors of Circadian Rhythm</h4>
+                            <p>Shift work, jet lag, and irregular sleep schedules can disrupt your circadian rhythm. Understanding these factors can help you minimize their impact on your sleep.</p>
+                        </div>
+                        <button class="read-more-btn">Read More</button>
+                    </article>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="sleep.js"></script>
+    <style>
+        .article-content {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--accent-color);
+        }
+
+        .article-content h4 {
+            color: var(--primary-color);
+            margin: 1.5rem 0 0.5rem;
+        }
+
+        .article-content p, .article-content ul {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .article-content ul {
+            padding-left: 1.5rem;
+        }
+
+        .read-more-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .read-more-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .blog-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blog-card.expanded {
+            max-height: none;
+        }
+    </style>
+    <script>
+        // Article expansion functionality
+        document.querySelectorAll('.read-more-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const article = this.closest('.blog-card');
+                const content = article.querySelector('.article-content');
+                const isExpanded = article.classList.contains('expanded');
+                
+                if (isExpanded) {
+                    content.style.display = 'none';
+                    this.textContent = 'Read More';
+                    article.classList.remove('expanded');
+                } else {
+                    content.style.display = 'block';
+                    this.textContent = 'Show Less';
+                    article.classList.add('expanded');
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

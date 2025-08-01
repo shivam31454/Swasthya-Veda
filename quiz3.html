@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lifestyle Assessment Quiz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #008080;
+            --secondary-color: #20B2AA;
+            --accent-color: #2E8B57;
+            --light-bg: #E0F2F1;
+            --text-color: #2C3E50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--light-bg), #ffffff);
+            min-height: 100vh;
+            color: var(--text-color);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 128, 128, 0.1);
+            margin: 40px auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        .progress {
+            height: 8px;
+            background: #E0F2F1;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            width: 0;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .question {
+            font-size: 20px;
+            margin: 30px 0;
+            color: var(--text-color);
+            line-height: 1.5;
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .option {
+            padding: 15px;
+            background: #ffffff;
+            border: 2px solid var(--light-bg);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            color: var(--text-color);
+        }
+
+        .option:hover {
+            background: var(--light-bg);
+            border-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .result {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background: var(--light-bg);
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+
+        .recommendations {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .recommendation-section {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 128, 128, 0.1);
+        }
+
+        .recommendation-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .recommendation-section h3 i {
+            font-size: 24px;
+        }
+
+        .recommendation-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .recommendation-list li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .recommendation-list li::before {
+            content: "•";
+            color: var(--secondary-color);
+            position: absolute;
+            left: 0;
+        }
+
+        .diet-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .diet-image {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .diet-image img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .diet-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .diet-image p {
+            padding: 8px;
+            background: white;
+            margin: 0;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        #score {
+            font-size: 22px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        #restart {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        #restart:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 600px) {
+            .options-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 20px;
+                margin: 20px auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Lifestyle Assessment Quiz</h2>
+        <div class="progress">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <p id="question" class="question"></p>
+        <div id="options" class="options-container"></div>
+        <div id="score" class="result"></div>
+        <button id="restart" class="result" onclick="restartQuiz()">Retake Quiz</button>
+    </div>
+    
+    <script>
+        const questions = [
+            { q: "How often do you exercise?", options: ["Daily", "Few times a week", "Rarely", "Never"] },
+            { q: "How well do you sleep at night?", options: ["Very well", "Okay", "Not great", "Poorly"] },
+            { q: "How balanced is your diet?", options: ["Very healthy", "Moderate", "Unhealthy", "Very unhealthy"] },
+            { q: "How much water do you drink daily?", options: ["More than 2 liters", "1-2 liters", "Less than 1 liter", "Rarely"] },
+            { q: "Do you smoke or consume alcohol?", options: ["Never", "Rarely", "Sometimes", "Frequently"] },
+            { q: "How often do you feel stressed?", options: ["Rarely", "Sometimes", "Often", "Always"] },
+            { q: "Do you take breaks from screen time?", options: ["Regularly", "Sometimes", "Rarely", "Never"] },
+            { q: "Do you have a regular sleep schedule?", options: ["Always", "Often", "Rarely", "Never"] },
+            { q: "Do you practice mindfulness or meditation?", options: ["Daily", "Sometimes", "Rarely", "Never"] },
+            { q: "How social are you?", options: ["Very social", "Sometimes", "Rarely", "Not at all"] },
+            { q: "Do you spend time outdoors?", options: ["Every day", "Few times a week", "Rarely", "Never"] },
+            { q: "How often do you eat processed foods?", options: ["Never", "Sometimes", "Often", "Always"] },
+            { q: "Do you get enough fiber in your diet?", options: ["Always", "Often", "Rarely", "Never"] },
+            { q: "Do you have a positive outlook on life?", options: ["Always", "Often", "Sometimes", "Rarely"] },
+            { q: "Do you manage your time effectively?", options: ["Always", "Often", "Sometimes", "Rarely"] },
+            { q: "Do you get routine health check-ups?", options: ["Yes", "Sometimes", "Rarely", "Never"] },
+            { q: "Do you feel energetic throughout the day?", options: ["Always", "Often", "Rarely", "Never"] },
+            { q: "How much sugar do you consume?", options: ["Minimal", "Moderate", "High", "Very high"] },
+            { q: "Do you engage in hobbies or leisure activities?", options: ["Regularly", "Sometimes", "Rarely", "Never"] },
+            { q: "How often do you eat home-cooked meals?", options: ["Always", "Often", "Rarely", "Never"] }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            if (currentQuestion < questions.length) {
+                document.getElementById("question").textContent = questions[currentQuestion].q;
+                let optionsHTML = "";
+                questions[currentQuestion].options.forEach((option, index) => {
+                    optionsHTML += `<button class='option' onclick='handleAnswer(${index})'>${option}</button>`;
+                });
+                document.getElementById("options").innerHTML = optionsHTML;
+                document.getElementById("progress-bar").style.width = `${(currentQuestion / questions.length) * 100}%`;
+            } else {
+                showResult();
+            }
+        }
+
+        function handleAnswer(index) {
+            score += index; // Higher index means less healthy choice
+            currentQuestion++;
+            loadQuestion();
+        }
+
+        function getRecommendations(score) {
+            const recommendations = {
+                yoga: [],
+                diet: [],
+                ayurveda: []
+            };
+
+            if (score <= 20) {
+                // Excellent lifestyle recommendations
+                recommendations.yoga = [
+                    "Advanced Vinyasa Flow (45 minutes daily)",
+                    "Meditation (20 minutes morning and evening)",
+                    "Pranayama breathing exercises",
+                    "Weekly Yin Yoga session"
+                ];
+                recommendations.diet = [
+                    "Maintain your balanced diet with seasonal fruits",
+                    "Include more superfoods like chia seeds and quinoa",
+                    "Stay hydrated with herbal teas",
+                    "Continue with your regular meal timings"
+                ];
+                recommendations.ayurveda = [
+                    "Daily self-massage with warm sesame oil",
+                    "Regular detox with seasonal fruits",
+                    "Maintain your dinacharya (daily routine)",
+                    "Practice mindfulness in daily activities"
+                ];
+            } else if (score <= 40) {
+                // Good lifestyle recommendations
+                recommendations.yoga = [
+                    "Hatha Yoga (30 minutes daily)",
+                    "Basic meditation (15 minutes daily)",
+                    "Sun Salutations (5 rounds)",
+                    "Weekly restorative yoga"
+                ];
+                recommendations.diet = [
+                    "Increase intake of fresh vegetables",
+                    "Include more whole grains",
+                    "Reduce processed foods",
+                    "Maintain regular meal timings"
+                ];
+                recommendations.ayurveda = [
+                    "Oil pulling in the morning",
+                    "Herbal tea before bed",
+                    "Regular detox with warm water and lemon",
+                    "Practice gratitude daily"
+                ];
+            } else if (score <= 60) {
+                // Moderate lifestyle recommendations
+                recommendations.yoga = [
+                    "Gentle Yoga (20 minutes daily)",
+                    "Basic breathing exercises",
+                    "Simple stretches in the morning",
+                    "Weekly yoga class"
+                ];
+                recommendations.diet = [
+                    "Start with balanced breakfast",
+                    "Include more fiber in diet",
+                    "Reduce sugar intake",
+                    "Regular meal timings"
+                ];
+                recommendations.ayurveda = [
+                    "Start with warm water in the morning",
+                    "Basic self-care routine",
+                    "Herbal supplements as needed",
+                    "Regular sleep schedule"
+                ];
+            } else {
+                // Unhealthy lifestyle recommendations
+                recommendations.yoga = [
+                    "Beginner Yoga (15 minutes daily)",
+                    "Simple breathing exercises",
+                    "Basic stretches",
+                    "Start with guided yoga videos"
+                ];
+                recommendations.diet = [
+                    "Focus on regular meal timings",
+                    "Include more fresh fruits",
+                    "Reduce junk food",
+                    "Stay hydrated"
+                ];
+                recommendations.ayurveda = [
+                    "Start with basic daily routine",
+                    "Warm water with honey in morning",
+                    "Simple herbal remedies",
+                    "Regular sleep schedule"
+                ];
+            }
+
+            return recommendations;
+        }
+
+        function showResult() {
+            let lifestyleLevel = "";
+            if (score <= 20) lifestyleLevel = "Excellent lifestyle! Keep it up!";
+            else if (score <= 40) lifestyleLevel = "Good lifestyle, but there's room for improvement.";
+            else if (score <= 60) lifestyleLevel = "Moderate lifestyle. Consider making healthier choices.";
+            else lifestyleLevel = "Unhealthy lifestyle. Start making better habits!";
+            
+            const recommendations = getRecommendations(score);
+            
+            document.getElementById("question").style.display = "none";
+            document.getElementById("options").style.display = "none";
+            
+            let resultHTML = `
+                <div id="score">${lifestyleLevel}</div>
+                <div class="recommendations">
+                    <div class="recommendation-section">
+                        <h3>🧘‍♀️ Yoga Plan</h3>
+                        <ul class="recommendation-list">
+                            ${recommendations.yoga.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                    </div>
+                    
+                    <div class="recommendation-section">
+                        <h3>🥗 Diet Chart</h3>
+                        <ul class="recommendation-list">
+                            ${recommendations.diet.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                        <div class="diet-images">
+                            <div class="diet-image">
+                                <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061" alt="Healthy Breakfast">
+                                <p>Balanced Breakfast</p>
+                            </div>
+                            <div class="diet-image">
+                                <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd" alt="Fresh Vegetables">
+                                <p>Fresh Vegetables</p>
+                            </div>
+                            <div class="diet-image">
+                                <img src="https://images.unsplash.com/photo-1490818387583-1baba5e638af" alt="Healthy Snacks">
+                                <p>Healthy Snacks</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="recommendation-section">
+                        <h3>🌿 Ayurveda Recommendations</h3>
+                        <ul class="recommendation-list">
+                            ${recommendations.ayurveda.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+                <button id="restart" onclick="restartQuiz()">Retake Quiz</button>
+            `;
+            
+            document.getElementById("score").innerHTML = resultHTML;
+            document.getElementById("score").style.display = "block";
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById("question").style.display = "block";
+            document.getElementById("options").style.display = "block";
+            document.getElementById("score").style.display = "none";
+            document.getElementById("restart").style.display = "none";
+            loadQuestion();
+        }
+
+        loadQuestion();
+    </script>
+</body>
+</html>

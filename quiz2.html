@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stress Analysis Quiz</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Londrina+Outline&family=Sigmar&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+        body {
+            /* font-family: Arial, sans-serif; */
+            font-family: "Ubuntu", sans-serif;
+            text-align: center;
+            background: linear-gradient(to bottom, #e3f2fd, #e8f5e9);
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: auto;
+        }
+        .question {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        .option {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 2px solid #e3f2fd;
+            background: #f1f8e9;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .option:hover {
+            border-color: #1b5e20;
+            background: #e8f5e9;
+        }
+        .hidden{
+            display: none;
+        }
+        .features{
+            display: none;
+        }
+        .result {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .container h1{
+            color: #1b5e20;
+        }
+       
+        #final{
+            display: none;
+            width: 80vw;
+            margin: auto;
+            font-family: "Ubuntu", sans-serif;
+  
+        }
+        #final h1{
+            color: #1b5e20;
+            font-size: 3rem;
+        }
+        #final h4{
+           font-weight: 100;
+           font-size: 1.2rem;
+        }
+        .greenbtn{
+            background-color: initial;
+            background-image: linear-gradient(-180deg, #00D775, #00BD68);
+            border-radius: 5px;
+            box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px;
+            color: #FFFFFF;
+            cursor: pointer;
+            display: inline-block;
+            font-family: Inter,-apple-system,system-ui,Roboto,"Helvetica Neue",Arial,sans-serif;
+            height: 44px;
+            line-height: 44px;
+            outline: 0;
+            overflow: hidden;
+            padding: 0 20px;
+            pointer-events: auto;
+            position: relative;
+            text-align: center;
+            touch-action: manipulation;
+            user-select: none;
+            -webkit-user-select: none;
+            vertical-align: top;
+            white-space: nowrap;
+            width: 100%;
+            z-index: 9;
+            border: 0;
+
+        }
+        
+    .features {
+    padding: 6rem 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .feature-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+  
+  .feature-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .feature-card h3 {
+    font-family: 'Instrument Sans', sans-serif;
+    color: #1a5f7a;
+    margin-bottom: 1rem;
+  }
+  
+  .feature-card p {
+    color: #666;
+  }
+
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Stress Analysis Quiz</h1>
+        <div id="quiz">
+            <p class="question" id="question-text"></p>
+            <div id="options"></div>
+            <button id="next-btn" class="hidden">Next</button>
+        </div>
+        <div id="result" class="hidden">
+            <p class="result" id="stress-level"></p>
+            <p id="stress-message"></p>
+            <button onclick="restartQuiz()" class="greenbtn">Take Quiz Again</button>
+        </div>
+    </div>
+
+    <section id="final">
+        <h1>We are here to help you manage your stress</h1>
+        <h4>Stress is a process, not a diagnosis. We experience stress when there is an imbalance between the demands being made on us and our resources to cope with those demands. The level and extent of stress a person may feel depends a lot on their attitude to a particular situation. An event that may be extremely stressful for one person can be a mere hiccup in another person’s life.</h4>
+    </section>
+
+    <section class="features" style="display: none;">
+        <div class="feature-card stresstracker">
+          <div class="icon">🌿</div>
+          <h3>Record your stress levels daily</h3>
+          <p>Recording daily stress levels helps track patterns, identify triggers, and improve mental well-being over time.</p>
+        </div>
+        <div class="feature-card bookings">
+          <div class="icon">💝</div>
+          <h3>Book Appointment</h3>
+          <a href="booking/booking.html" style="text-decoration: none;"><p>Personalized diet and ayurvedic remedies</p></a>
+        </div>
+      </section>
+
+    <script>
+        const questions = [
+            { question: "How often do you feel overwhelmed by your responsibilities?", options: ["Rarely or never", "Sometimes", "Often", "Almost all the time"] },
+            { question: "Do you find it difficult to relax or 'switch off'?", options: ["Rarely or never", "Sometimes", "Often", "Almost all the time"] },
+            { question: "How would you rate your sleep quality?", options: ["Excellent", "Good", "Fair", "Poor"] },
+            { question: "How often do you experience physical symptoms of stress?", options: ["Rarely or never", "Sometimes", "Often", "Almost all the time"] },
+            { question: "How often do you engage in activities to reduce stress?", options: ["Regularly", "Sometimes", "Rarely", "Never"] },
+            { question: "How frequently do you feel irritable or impatient?", options: ["Rarely or never", "Sometimes", "Often", "Almost all the time"] },
+            { question: "Do you struggle with concentration or memory issues?", options: ["Rarely or never", "Sometimes", "Often", "Almost all the time"] },
+            { question: "How often do you experience muscle tension or body aches?", options: ["Rarely or never", "Sometimes", "Often", "Almost all the time"] },
+            { question: "How balanced is your work-life schedule?", options: ["Well-balanced", "Somewhat balanced", "Not very balanced", "Very unbalanced"] },
+            { question: "Do you feel emotionally exhausted at the end of the day?", options: ["Rarely or never", "Sometimes", "Often", "Almost all the time"] }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        
+        function displayQuestion() {
+            document.getElementById("result").classList.add("hidden");
+            document.getElementById("quiz").classList.remove("hidden");
+            document.getElementById("next-btn").classList.add("hidden");
+            const questionText = document.getElementById("question-text");
+            const optionsContainer = document.getElementById("options");
+            questionText.innerText = questions[currentQuestion].question;
+            optionsContainer.innerHTML = "";
+            
+            questions[currentQuestion].options.forEach((option, index) => {
+                const btn = document.createElement("button");
+                btn.innerText = option;
+                btn.className = "option";
+                btn.onclick = () => selectAnswer(index);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function selectAnswer(index) {
+            score += index;
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                displayQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            document.getElementById("quiz").classList.add("hidden");
+            document.getElementById("result").classList.remove("hidden");
+            const maxScore = questions.length * 3;
+            const percentage = (score / maxScore) * 100;
+            let level, message;
+            if (percentage < 25) {
+                level = "Low";
+                message = "Your stress levels appear well-managed. Keep up your healthy habits!";
+            } else if (percentage < 50) {
+                level = "Moderate";
+                message = "You're experiencing some stress. Consider adding relaxation techniques.";
+            } else if (percentage < 75) {
+                level = "High";
+                message = "Your stress levels are concerning. Try managing stress with self-care techniques.";
+            } else {
+                level = "Severe";
+                message = "Your stress levels are very high. Seeking professional support is recommended.";
+            }
+            document.getElementById("stress-level").innerText = `Your Stress Level: ${level}`;
+            document.getElementById("stress-message").innerText = message;
+            document.getElementById("final").style.display='block';
+            document.querySelector(".features").style.display='flex';
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            displayQuestion();
+        }
+
+        displayQuestion();
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('.stresstracker').addEventListener('click', function() {
+            window.location.href = './stress-monitoring-webapp/stressindex.html';
+        });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('.bookings').addEventListener('click', function() {
+            window.location.href = './booking/booking.html';
+        });
+        });
+
+
+    </script>
+</body>
+</html>
